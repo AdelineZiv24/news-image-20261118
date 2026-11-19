@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The World in One Page — Wednesday 18 November 2026</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1024px; height: 1024px; }
+  body {
+    background: #f7f2e7;
+    color: #181410;
+    font-family: "Noto Serif", "DejaVu Serif", Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { height: 1024px; padding: 8px 22px 5px; display: flex; flex-direction: column; overflow: hidden; }
+  .sans { font-family: "Noto Sans", "DejaVu Sans", Helvetica, Arial, sans-serif; }
+
+  /* ---------- eyebrow + masthead: the DATE is the headline ---------- */
+  .eyebrow {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-top: 5px solid #181410; border-bottom: 1px solid #181410;
+    padding: 2px 0; font-size: 10px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase;
+  }
+  .eyebrow .paper { font-family: "Noto Serif", serif; font-size: 12.5px; letter-spacing: 2.6px; font-weight: 900; }
+  .masthead { text-align: center; padding: 3px 0 0; }
+  .masthead h1 {
+    font-family: "Noto Serif Display", "Noto Serif", "DejaVu Serif", serif;
+    font-weight: 900; font-size: 47px; line-height: 1.0; letter-spacing: 0.2px; white-space: nowrap;
+  }
+  .masthead .sub { font-style: italic; font-size: 11.5px; color: #3d372b; margin-top: 2px; }
+
+  /* ---------- stat strip ---------- */
+  .stats {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    border-top: 2.5px solid #181410; border-bottom: 1px solid #181410;
+    margin-top: 4px; padding: 2px 0 2px;
+  }
+  .stat { text-align: center; padding: 0 4px; }
+  .stat + .stat { border-left: 1px solid #cfc6ae; }
+  .stat .big { font-family: "Noto Serif Display", "Noto Serif", serif; font-weight: 900; font-size: 22px; line-height: 1.05; }
+  .stat .big.red { color: #8c1d18; }
+  .stat .lab { font-family: "Noto Sans", sans-serif; font-size: 8.6px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #4a4436; margin-top: 1px; line-height: 1.25; }
+
+  /* ---------- story cards ---------- */
+  .num {
+    display: inline-block; min-width: 16px; height: 16px; line-height: 16px; text-align: center;
+    background: #181410; color: #f7f2e7; font-family: "Noto Sans", sans-serif;
+    font-size: 10px; font-weight: 800; border-radius: 2px; padding: 0 2px;
+    vertical-align: 2px; margin-right: 4px;
+  }
+  .kick { font-family: "Noto Sans", sans-serif; font-size: 9.3px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #8c1d18; margin: 3px 0 1px; }
+  .card h3 { font-weight: 900; line-height: 1.12; }
+  .card p { line-height: 1.24; color: #241f16; text-align: left; }
+  .card svg { display: block; width: 100%; }
+
+  .leadrow { display: grid; grid-template-columns: 1.28fr 1fr 1fr; gap: 14px; margin-top: 5px; }
+  .leadrow .card h3 { font-size: 17.5px; }
+  .leadrow .card p { font-size: 10px; margin-top: 2px; line-height: 1.2; }
+  .leadrow .card + .card { border-left: 1px solid #cfc6ae; padding-left: 14px; }
+  .leadrow .card svg { height: 44px; }
+
+  .cardgrid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-top: 4px; padding-top: 4px; border-top: 1px solid #181410; }
+  .cardgrid .card h3 { font-size: 11.6px; }
+  .cardgrid .card p { font-size: 8.9px; margin-top: 1px; line-height: 1.2; }
+  .cardgrid .kick { font-size: 7.9px; letter-spacing: 1px; margin: 2px 0 1px; }
+  .cardgrid .card svg { height: 28px; }
+
+  /* ---------- map band ---------- */
+  .mapband { display: grid; grid-template-columns: 606px 1fr; gap: 14px; margin-top: 4px; padding-top: 4px; border-top: 2.5px solid #181410; }
+  .mapband .cap { font-family: "Noto Sans", sans-serif; font-size: 10px; letter-spacing: 1.6px; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; }
+  .mapside .legend { font-size: 10.3px; line-height: 1.3; }
+  .datecheck {
+    border: 1.6px solid #8c1d18; padding: 4px 7px 5px; margin-top: 6px; background: #fbf7ec;
+  }
+  .datecheck .cap { color: #8c1d18; margin-bottom: 1px; }
+  .datecheck p { font-size: 9.8px; line-height: 1.28; }
+
+  /* ---------- briefs ---------- */
+  .briefs { margin-top: 5px; padding-top: 4px; border-top: 2.5px solid #181410; flex: 1; }
+  .briefs .cap { font-family: "Noto Sans", sans-serif; font-size: 10.5px; letter-spacing: 1.6px; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; }
+  .briefs .cap .r { color: #8c1d18; }
+  .bcols { column-count: 3; column-gap: 20px; }
+  .brief { font-size: 8.6px; line-height: 1.14; margin-bottom: 1px; break-inside: avoid; }
+  .brief .num { min-width: 15px; height: 15px; line-height: 15px; font-size: 9.3px; }
+  .brief b { font-variant: small-caps; font-size: 10.6px; }
+
+  /* ---------- footer ---------- */
+  .footer { border-top: 1px solid #181410; margin-top: 2px; padding-top: 1px; text-align: center; font-size: 8.6px; color: #554e3e; line-height: 1.2; }
+  .footer b { color: #181410; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="eyebrow sans">
+    <span class="paper">The World in One Page</span>
+    <span>47 stories &middot; six continents &middot; one day</span>
+    <span>Late edition &middot; Vol. I &mdash; No. 322</span>
+  </div>
+
+  <div class="masthead">
+    <h1>Wednesday 18 November 2026</h1>
+    <div class="sub">The whole of the day on a single page &mdash; the Gulf, the markets, the summit, the outbreaks and the football, each one numbered, mapped and dated.</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="big">$81.3bn</div><div class="lab">Anthropic IPO, largest on record</div></div>
+    <div class="stat"><div class="big red">11,536</div><div class="lab">Ebola cases in DR Congo, CDC</div></div>
+    <div class="stat"><div class="big">25.9bn km</div><div class="lab">Voyager 1: one light-day out</div></div>
+    <div class="stat"><div class="big">56&ndash;44</div><div class="lab">Democrats&rsquo; Senate majority</div></div>
+    <div class="stat"><div class="big red">3.6%</div><div class="lab">UK inflation, a one-year high</div></div>
+    <div class="stat"><div class="big">&euro;45bn</div><div class="lab">EU loan proposed for Ukraine</div></div>
+  </div>
+
+  <div class="leadrow">
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 380 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The Gulf: Kuwait, Bahrain and Riyadh under attack">
+        <rect x="0" y="0" width="380" height="96" fill="#a9c6cf"/>
+        <path d="M0 0 L120 0 L106 26 L130 44 L98 62 L106 96 L0 96 Z" fill="#d9c9a3"/>
+        <path d="M200 0 L380 0 L380 40 L300 44 L260 30 L220 34 Z" fill="#d9c9a3"/>
+        <path d="M122 96 L152 66 L188 78 L208 96 Z" fill="#d9c9a3"/>
+        <ellipse cx="300" cy="60" rx="17" ry="7" fill="#c9b586"/>
+        <path d="M60 34 L150 52" stroke="#8c1d18" stroke-width="2" stroke-dasharray="4 3"/>
+        <path d="M150 52 L250 44" stroke="#8c1d18" stroke-width="2" stroke-dasharray="4 3"/>
+        <path d="M250 44 L320 58" stroke="#8c1d18" stroke-width="2" stroke-dasharray="4 3"/>
+        <path d="M72 30 l10 4 -10 4 3 -4 Z" fill="#181410"/>
+        <path d="M162 48 l10 4 -10 4 3 -4 Z" fill="#181410"/>
+        <path d="M262 40 l10 4 -10 4 3 -4 Z" fill="#181410"/>
+        <g fill="#8c1d18"><circle cx="150" cy="52" r="6"/><circle cx="250" cy="44" r="6"/><circle cx="320" cy="58" r="6"/></g>
+        <g fill="#f7f2e7" font-family="Noto Sans, sans-serif" font-size="7.5" font-weight="800" text-anchor="middle">
+          <text x="150" y="54.8">K</text><text x="250" y="46.8">B</text><text x="320" y="60.8">R</text>
+        </g>
+        <text x="8" y="13" font-family="Noto Sans, sans-serif" font-size="8.6" font-weight="800" letter-spacing="1.2" fill="#4a4239">ARABIA</text>
+        <text x="300" y="13" font-family="Noto Sans, sans-serif" font-size="8.6" font-weight="800" letter-spacing="1.2" fill="#4a4239">IRAN</text>
+        <text x="190" y="90" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="8.4" font-weight="700" letter-spacing="1.1" fill="#274b5c">KUWAIT &middot; BAHRAIN &middot; RIYADH</text>
+      </svg>
+      <div class="kick"><span class="num">1</span> The Gulf &middot; War &mdash; the lead</div>
+      <h3>Iran hits back at US bases in Kuwait and Bahrain</h3>
+      <p>Tehran said it hit Kuwait&rsquo;s Ali Al Salem base overnight; Bahrain says it has now stopped Iranian attacks three times in a week. Saudi defences downed Houthi missiles aimed at Riyadh &mdash; a day after the US struck Qeshm Island.</p>
+    </div>
+
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 300 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Anthropic shares priced at 83 dollars">
+        <rect x="0" y="0" width="300" height="96" fill="#20242a"/>
+        <g fill="#7fc46a"><rect x="24" y="58" width="26" height="22"/><rect x="58" y="46" width="26" height="34"/><rect x="92" y="34" width="26" height="46"/><rect x="126" y="20" width="26" height="60"/></g>
+        <path d="M170 70 L196 52 L216 58 L244 30 L272 22" stroke="#e8c85a" stroke-width="2.6" fill="none"/>
+        <path d="M272 22 l-10 1 M272 22 l-2 -10" stroke="#e8c85a" stroke-width="2.6"/>
+        <text x="88" y="14" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="10" font-weight="800" letter-spacing="1" fill="#e8e4da">$83 A SHARE</text>
+        <text x="222" y="86" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="8.6" font-weight="800" letter-spacing="1.2" fill="#e8e4da">TRADES THU AS ANT</text>
+        <text x="88" y="90" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="8.6" font-weight="800" letter-spacing="1.2" fill="#7fc46a">$1.5TN</text>
+      </svg>
+      <div class="kick"><span class="num">2</span> US &middot; Business</div>
+      <h3>Anthropic prices the biggest IPO ever at $83</h3>
+      <p>The $81.3bn offering, enlarged from 825m shares, values Claude&rsquo;s maker at about $1.5 trillion fully diluted. Shares start trading on Nasdaq on Thursday as ANT.</p>
+    </div>
+
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 300 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three flags over the Shenzhen skyline">
+        <rect x="0" y="0" width="300" height="96" fill="#e9e0c8"/>
+        <g fill="#5a5148">
+          <rect x="14" y="46" width="26" height="34"/><rect x="46" y="34" width="24" height="46"/><rect x="76" y="52" width="28" height="28"/><rect x="110" y="26" width="22" height="54"/><rect x="138" y="44" width="26" height="36"/><rect x="170" y="38" width="24" height="42"/><rect x="200" y="50" width="26" height="30"/><rect x="232" y="30" width="22" height="50"/><rect x="260" y="48" width="26" height="32"/>
+        </g>
+        <g fill="#e8c85a"><rect x="20" y="52" width="5" height="5"/><rect x="29" y="52" width="5" height="5"/><rect x="52" y="40" width="5" height="5"/><rect x="60" y="40" width="5" height="5"/><rect x="116" y="32" width="5" height="5"/><rect x="124" y="32" width="5" height="5"/><rect x="238" y="36" width="5" height="5"/><rect x="246" y="36" width="5" height="5"/></g>
+        <rect x="0" y="80" width="300" height="3" fill="#8a8272"/>
+        <g stroke="#8a8272" stroke-width="1.6"><path d="M52 84 v-66 M128 84 v-66 M204 84 v-66"/></g>
+        <g>
+          <rect x="52" y="18" width="34" height="21" fill="#fff"/><rect x="52" y="18" width="34" height="5" fill="#b03a30"/><rect x="52" y="28.6" width="34" height="5" fill="#b03a30"/><rect x="52" y="18" width="15" height="11" fill="#2e4a68"/>
+          <rect x="128" y="18" width="34" height="21" fill="#b03a30"/><path d="M132 23 l2 4.6 4.8 0 -3.9 2.8 1.5 4.6 -4.4 -3.2 -4.4 3.2 1.5 -4.6 -3.9 -2.8 4.8 0 Z" fill="#e8c85a"/>
+          <rect x="204" y="18" width="34" height="21" fill="#fff"/><rect x="204" y="18" width="34" height="7" fill="#fff"/><rect x="204" y="25" width="34" height="7" fill="#2e4a68"/><rect x="204" y="32" width="34" height="7" fill="#b03a30"/>
+        </g>
+        <text x="150" y="93" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="8.4" font-weight="700" letter-spacing="1.1" fill="#4a4436">SHENZHEN &middot; APEC &middot; THU: THE TRILATERAL</text>
+      </svg>
+      <div class="kick"><span class="num">3</span> China &middot; Diplomacy</div>
+      <h3>Three leaders, one hug: Trump lands in Shenzhen</h3>
+      <p>Xi greeted Trump on the tarmac with a hug; Putin shook his hand. The three meet Thursday in the first-ever US&ndash;China&ndash;Russia trilateral.</p>
+    </div>
+  </div>
+
+  <div class="cardgrid">
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 150 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Senate split: 56 to 44">
+        <rect x="0" y="0" width="150" height="62" fill="#e9e0c8"/>
+        <rect x="10" y="14" width="86" height="16" fill="#2e4a68"/>
+        <rect x="96" y="14" width="44" height="16" fill="#b03a30"/>
+        <text x="53" y="26" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="10" font-weight="800" fill="#f7f2e7">56</text>
+        <text x="118" y="26" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="10" font-weight="800" fill="#f7f2e7">44</text>
+        <rect x="58" y="38" width="34" height="16" fill="#8a6f3c"/>
+        <rect x="66" y="32" width="18" height="8" fill="#f7f2e7" stroke="#8a6f3c" stroke-width="1.2"/>
+        <text x="75" y="60" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7.8" font-weight="800" letter-spacing="1.1" fill="#4a4436">ALASKA DECIDES IT</text>
+      </svg>
+      <div class="kick"><span class="num">4</span> US &middot; Politics</div>
+      <h3>Democrats take the Senate, 56&ndash;44</h3>
+      <p>Mary Peltola beat Dan Sullivan in Alaska &mdash; the ninth midterm flip &mdash; for the party&rsquo;s biggest majority since 2009.</p>
+    </div>
+
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 150 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Voyager 1, one light-day out">
+        <rect x="0" y="0" width="150" height="62" fill="#141a26"/>
+        <g fill="#f7f2e7"><circle cx="18" cy="10" r="1.2"/><circle cx="52" cy="6" r="1"/><circle cx="96" cy="10" r="1.2"/><circle cx="132" cy="8" r="1"/><circle cx="70" cy="16" r="0.9"/><circle cx="120" cy="20" r="0.9"/><circle cx="30" cy="20" r="0.9"/></g>
+        <circle cx="24" cy="46" r="8" fill="#4d7d99"/><path d="M18 42 a8 8 0 0 1 12 0 a10 6 0 0 0 -12 0" fill="#7fb069"/>
+        <path d="M34 42 L104 26" stroke="#e8c85a" stroke-width="1.6" stroke-dasharray="4 3"/>
+        <ellipse cx="116" cy="24" rx="13" ry="13" fill="none" stroke="#e9e4da" stroke-width="2.2" transform="rotate(-24 116 24)"/>
+        <path d="M116 24 L136 44" stroke="#e9e4da" stroke-width="2.2"/>
+        <rect x="132" y="42" width="4" height="10" fill="#e9e4da"/>
+        <text x="75" y="59" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7.6" font-weight="800" letter-spacing="1" fill="#e8e4da">5:16 A.M. EST &middot; WEDNESDAY</text>
+      </svg>
+      <div class="kick"><span class="num">5</span> Space &middot; NASA</div>
+      <h3>Voyager 1, one light-day from Earth</h3>
+      <p>At 5:16 a.m. EST it passed 16.1bn miles out; a radio signal now takes a full day to reach it. Launched in 1977.</p>
+    </div>
+
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 150 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ebola cases climb: 11,536">
+        <rect x="0" y="0" width="150" height="62" fill="#f1e7d2"/>
+        <path d="M14 50 L44 44 L74 36 L104 22 L132 10" stroke="#8c1d18" stroke-width="2.6" fill="none"/>
+        <g fill="#8c1d18"><circle cx="14" cy="50" r="3"/><circle cx="44" cy="44" r="3"/><circle cx="74" cy="36" r="3"/><circle cx="104" cy="22" r="3"/><circle cx="132" cy="10" r="4"/></g>
+        <text x="132" y="6" text-anchor="end" font-family="Noto Sans, sans-serif" font-size="9" font-weight="800" fill="#8c1d18">11,536</text>
+        <circle cx="30" cy="16" r="9" fill="#a33327"/>
+        <g stroke="#a33327" stroke-width="2.2" stroke-linecap="round"><path d="M30 4 v-3 M30 31 v-3 M18 16 h-3 M45 16 h-3 M22 8 l-2 -2 M38 8 l2 -2 M22 24 l-2 2 M38 24 l2 2"/></g>
+        <rect x="0" y="52" width="150" height="2.4" fill="#8a8272"/>
+        <text x="75" y="60" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7.8" font-weight="800" letter-spacing="1" fill="#4a4436">400&ndash;500 NEW CASES A WEEK</text>
+      </svg>
+      <div class="kick"><span class="num">6</span> Africa &middot; Health</div>
+      <h3>Ebola passes 11,536 cases in DR Congo</h3>
+      <p>The CDC&rsquo;s 18 Nov update counts 5,635 deaths; the second-largest outbreak on record. Seven in ten infected under-fives have died.</p>
+    </div>
+
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 150 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nvidia bars climb; Seoul jumps">
+        <rect x="0" y="0" width="150" height="62" fill="#20242a"/>
+        <g fill="#7fc46a"><rect x="12" y="40" width="13" height="16"/><rect x="31" y="33" width="13" height="23"/><rect x="50" y="26" width="13" height="30"/><rect x="69" y="17" width="13" height="39"/></g>
+        <text x="47" y="11" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="8.4" font-weight="800" letter-spacing="0.8" fill="#e8e4da">$115.8BN</text>
+        <path d="M92 46 L110 34 L124 38 L140 20" stroke="#e8c85a" stroke-width="2.4" fill="none"/>
+        <path d="M140 20 l-8 0 M140 20 l-1 -8" stroke="#e8c85a" stroke-width="2.4"/>
+        <text x="118" y="58" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7.6" font-weight="800" fill="#e8c85a">KOSPI +3.3%</text>
+      </svg>
+      <div class="kick"><span class="num">7</span> Asia &middot; Markets</div>
+      <h3>Nvidia&rsquo;s $115.8bn quarter lifts Asia</h3>
+      <p>Revenue doubled year on year; Seoul&rsquo;s KOSPI rose as much as 3.3% in early trade. Asia-Pacific added 0.9%.</p>
+    </div>
+
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 150 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Inflation up, gold down">
+        <rect x="0" y="0" width="150" height="62" fill="#e9e0c8"/>
+        <rect x="18" y="8" width="10" height="32" rx="5" fill="#fff" stroke="#8a8272" stroke-width="1.4"/>
+        <rect x="20.8" y="18" width="4.4" height="20" fill="#c23b2e"/>
+        <circle cx="23" cy="44" r="8" fill="#c23b2e"/>
+        <text x="42" y="20" font-family="Noto Sans, sans-serif" font-size="9.5" font-weight="800" fill="#8c1d18">3.6%</text>
+        <text x="42" y="32" font-family="Noto Sans, sans-serif" font-size="7.4" font-weight="700" fill="#4a4436">UK INFLATION</text>
+        <path d="M96 14 L138 14 L138 26 L96 26 Z" fill="#e8c85a" stroke="#8a6f3c" stroke-width="1.4"/>
+        <path d="M104 34 L130 34" stroke="#8c1d18" stroke-width="2.6"/>
+        <path d="M130 34 l-6 -4 M130 34 l-6 4" stroke="#8c1d18" stroke-width="2.2" fill="none"/>
+        <text x="117" y="50" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7.6" font-weight="800" fill="#4a4436">GOLD &lt; $3,800</text>
+      </svg>
+      <div class="kick"><span class="num">8</span> UK &middot; Markets</div>
+      <h3>UK prices jump 3.6%; gold slides under $3,800</h3>
+      <p>October inflation hit a one-year high; gold fell to its lowest since September 2025 on a firm dollar.</p>
+    </div>
+
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 150 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="EU stars and a 45 billion euro loan">
+        <rect x="0" y="0" width="150" height="62" fill="#dcebf2"/>
+        <circle cx="52" cy="31" r="21" fill="#2e4a68"/>
+        <g fill="#e8c85a">
+          <circle cx="52" cy="13" r="1.8"/><circle cx="63" cy="17" r="1.8"/><circle cx="69" cy="28" r="1.8"/><circle cx="63" cy="41" r="1.8"/><circle cx="52" cy="47" r="1.8"/><circle cx="41" cy="41" r="1.8"/><circle cx="35" cy="28" r="1.8"/><circle cx="41" cy="17" r="1.8"/>
+        </g>
+        <text x="52" y="34" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="9" font-weight="800" fill="#f7f2e7">&euro;45bn</text>
+        <g fill="#e8c85a" stroke="#8a6f3c" stroke-width="1"><rect x="96" y="38" width="40" height="7" rx="3"/><rect x="100" y="31" width="40" height="7" rx="3"/><rect x="104" y="24" width="40" height="7" rx="3"/></g>
+        <text x="118" y="16" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7.8" font-weight="800" letter-spacing="1" fill="#274b5c">FOR UKRAINE</text>
+      </svg>
+      <div class="kick"><span class="num">9</span> Europe &middot; Brussels</div>
+      <h3>EU proposes a &euro;45bn loan for Ukraine</h3>
+      <p>&euro;25bn for arms, &euro;20bn for the budget &mdash; repaid only after Russia pays reparations, the Commission says.</p>
+    </div>
+  </div>
+
+  <div class="cardgrid">
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 150 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A draft decision with 144 paragraphs">
+        <rect x="0" y="0" width="150" height="62" fill="#f1e7d2"/>
+        <g transform="rotate(-3 75 31)"><rect x="48" y="6" width="54" height="50" fill="#fdfaf2" stroke="#8a8272" stroke-width="1.4"/>
+        <path d="M56 16 h38 M56 23 h38 M56 30 h38 M56 37 h24" stroke="#9a927e" stroke-width="2.2"/>
+        <text x="75" y="48" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7" font-weight="800" letter-spacing="0.6" fill="#8c1d18">DRAFT</text></g>
+        <text x="34" y="34" text-anchor="middle" font-family="Noto Serif, serif" font-size="22" font-weight="900" fill="#8c1d18">144</text>
+        <text x="34" y="46" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="6.8" font-weight="800" letter-spacing="0.8" fill="#4a4436">PARAGRAPHS</text>
+        <text x="118" y="58" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7.8" font-weight="800" letter-spacing="1" fill="#4a4436">ANTALYA</text>
+      </svg>
+      <div class="kick"><span class="num">10</span> Global &middot; Climate</div>
+      <h3>COP31&rsquo;s draft: 144 paragraphs, no deal yet</h3>
+      <p>Ministers took over the Antalya talks on Tuesday; the first draft, published Monday, splits over fossil fuels and finance. Talks close Friday.</p>
+    </div>
+
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 150 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cyclone Akvan spirals in the Bay of Bengal">
+        <rect x="0" y="0" width="150" height="62" fill="#dcebf2"/>
+        <path d="M100 0 L150 0 L150 62 L118 62 L104 40 L96 26 L100 14 Z" fill="#d9c9a3"/>
+        <g fill="none" stroke="#2e4a68" stroke-width="2.4">
+          <path d="M52 34 a12 12 0 1 1 12 -12"/>
+          <path d="M52 34 a20 20 0 1 1 20 -20"/>
+          <path d="M52 34 a28 28 0 1 1 28 -28"/>
+        </g>
+        <circle cx="52" cy="34" r="4.5" fill="#8c1d18"/>
+        <path d="M52 34 L40 52" stroke="#8c1d18" stroke-width="2" stroke-dasharray="3 2"/>
+        <text x="75" y="59" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7.8" font-weight="800" letter-spacing="1" fill="#274b5c">90&ndash;100 KM/H &middot; BAY OF BENGAL</text>
+      </svg>
+      <div class="kick"><span class="num">11</span> Asia &middot; Weather</div>
+      <h3>Cyclone Akvan bears down on India</h3>
+      <p>Now a severe cyclonic storm, 90&ndash;100 km/h winds, about 550 km off Andhra Pradesh. Landfall is expected around Friday.</p>
+    </div>
+
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 150 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two refineries burning in Krasnodar">
+        <rect x="0" y="0" width="150" height="62" fill="#b9cdd6"/>
+        <rect x="18" y="26" width="22" height="28" fill="#5a5148"/>
+        <rect x="46" y="18" width="26" height="36" fill="#4a4239"/>
+        <rect x="78" y="30" width="20" height="24" fill="#5a5148"/>
+        <rect x="104" y="22" width="24" height="32" fill="#4a4239"/>
+        <path d="M24 26 q3 -8 7 0 q3 -6 7 0" stroke="#e07840" stroke-width="2.4" fill="none"/>
+        <path d="M52 18 q4 -9 8 0 q4 -7 8 0" stroke="#e07840" stroke-width="2.4" fill="none"/>
+        <path d="M110 22 q3 -8 7 0 q3 -6 7 0" stroke="#e07840" stroke-width="2.4" fill="none"/>
+        <circle cx="59" cy="6" r="7" fill="#57504a"/><circle cx="70" cy="3" r="9" fill="#6b645c"/>
+        <rect x="0" y="54" width="150" height="8" fill="#eef2f0"/>
+        <text x="75" y="61" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7.6" font-weight="800" letter-spacing="1" fill="#3c4a52">ILSKY &middot; AFIPSKY &middot; OVERNIGHT</text>
+      </svg>
+      <div class="kick"><span class="num">12</span> Europe &middot; Ukraine war</div>
+      <h3>Ukraine hits two Russian refineries overnight</h3>
+      <p>Ilsky and Afipsky in Krasnodar were struck, Kyiv said, a day after the Kerch Bridge span fell. Berlin talks are set for Thursday.</p>
+    </div>
+
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 150 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A bank and a stablecoin">
+        <rect x="0" y="0" width="150" height="62" fill="#e9e0c8"/>
+        <path d="M14 22 L48 10 L82 22 Z" fill="#8a6f3c"/>
+        <g fill="#8a6f3c"><rect x="18" y="24" width="6" height="22"/><rect x="34" y="24" width="6" height="22"/><rect x="50" y="24" width="6" height="22"/><rect x="66" y="24" width="6" height="22"/></g>
+        <rect x="12" y="46" width="72" height="5" fill="#8a6f3c"/>
+        <circle cx="116" cy="30" r="17" fill="#17605a"/>
+        <text x="116" y="34" text-anchor="middle" font-family="Noto Serif, serif" font-size="11" font-weight="900" fill="#f7f2e7">$</text>
+        <text x="116" y="58" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7.8" font-weight="800" letter-spacing="1" fill="#4a4436">USDC &middot; 24/7</text>
+      </svg>
+      <div class="kick"><span class="num">13</span> Asia &middot; Finance</div>
+      <h3>DBS opens its vaults to USDC</h3>
+      <p>Singapore&rsquo;s biggest bank will let institutional clients mint and redeem the stablecoin directly, settling 24/7.</p>
+    </div>
+
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 150 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A C-130 Hercules over Bogota">
+        <rect x="0" y="0" width="150" height="62" fill="#b9cdd6"/>
+        <path d="M14 32 L52 26 L96 26 L118 32 L96 37 L54 37 Z" fill="#5a5148"/>
+        <path d="M96 26 L112 14 L120 14 L108 27 Z" fill="#4a4239"/>
+        <path d="M52 28 L40 40 L46 40 L58 30 Z" fill="#4a4239"/>
+        <circle cx="34" cy="32" r="3" fill="#333"/><circle cx="66" cy="31" r="3" fill="#333"/><circle cx="88" cy="31" r="3" fill="#333"/>
+        <g fill="#3f6d4e"><path d="M8 56 l6 -13 6 13 Z"/><path d="M26 56 l6 -13 6 13 Z"/><path d="M112 56 l6 -13 6 13 Z"/><path d="M130 56 l6 -13 6 13 Z"/></g>
+        <rect x="0" y="55" width="150" height="7" fill="#eef2f0"/>
+        <text x="75" y="9" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7.8" font-weight="800" letter-spacing="1.2" fill="#3c4a52">BOGOT&Aacute; &middot; ON LOAN</text>
+      </svg>
+      <div class="kick"><span class="num">14</span> Americas &middot; Defence</div>
+      <h3>Hegseth&rsquo;s Hercules lands in Bogot&aacute;</h3>
+      <p>The US defence chief arrived to hand over a first C-130, on loan, with two more expected, Colombia said.</p>
+    </div>
+
+    <div class="card">
+      <svg preserveAspectRatio="none" viewBox="0 0 150 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The Fed building and rising inflation">
+        <rect x="0" y="0" width="150" height="62" fill="#e9e0c8"/>
+        <path d="M20 20 L58 8 L96 20 Z" fill="#8a6f3c"/>
+        <g fill="#8a6f3c"><rect x="24" y="22" width="7" height="24"/><rect x="42" y="22" width="7" height="24"/><rect x="60" y="22" width="7" height="24"/><rect x="78" y="22" width="7" height="24"/></g>
+        <rect x="18" y="46" width="78" height="5" fill="#8a6f3c"/>
+        <path d="M106 44 L124 30 L132 34 L146 16" stroke="#8c1d18" stroke-width="2.6" fill="none"/>
+        <path d="M146 16 l-9 1 M146 16 l-2 -9" stroke="#8c1d18" stroke-width="2.6"/>
+        <text x="126" y="58" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="7.6" font-weight="800" letter-spacing="0.8" fill="#8c1d18">RATES?</text>
+      </svg>
+      <div class="kick"><span class="num">15</span> US &middot; Economy</div>
+      <h3>Fed minutes: inflation worries linger</h3>
+      <p>October&rsquo;s minutes, out Wednesday, show some policymakers saw a need for a bigger rate rise.</p>
+    </div>
+  </div>
+
+  <div class="mapband">
+    <div>
+      <div class="cap sans">Where it happened &mdash; the day on the map</div>
+      <svg id="worldmap" width="606" height="90" viewBox="0 0 606 90" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <div class="mapside">
+      <div class="cap sans">How to read it</div>
+      <div class="legend"><b>Numbered pins</b> are the fifteen card stories above &mdash; all but <b>5</b>, in deep space. <b>Small dots</b> plot the briefs, 16&ndash;47 (35 and 38 are global).</div>
+      <div class="datecheck">
+        <div class="cap sans">Date check</div>
+        <p>Left out on purpose: the five Iranian tankers the US said it sank on <b>8 September</b> &mdash; Wednesday&rsquo;s Gulf news is the fresh Kuwait&ndash;Bahrain&ndash;Riyadh cycle, not September&rsquo;s. Also left out: Israel&rsquo;s mandate (7&ndash;8 Nov) and the Venezuela oil report (12 Nov).</p>
+      </div>
+    </div>
+  </div>
+
+<script>
+// Dot-matrix world map, drawn at load: land cells on an equirectangular
+// grid (64 x 24), numbered pins for the fifteen card stories, small dots
+// for the briefs. All coordinates are [number, lon, lat].
+(function () {
+  var CHUNKS = [
+    ["........",".....###","#.......",".####...","........","####....","..######","........"],
+    ["..######","#...####","####....",".#####..",".###..##","########","########","##......"],
+    ["..######","##..####","########","..###.#.",".#######","########","########","###....."],
+    ["....###.","...#####","########","#......#",".#######","########","########","###....."],
+    ["........","...#####","########",".......#","########","########","########","####...."],
+    ["........","..######","#######.",".......#","########","########","#######.","........"],
+    ["........",".#######","######..",".......#","########","########","#######.","##......"],
+    ["........",".#######","######..","......##",".#.#####","#######.","######.#","##......"],
+    ["........",".#######","####....","....####","########","########",".#####..","........"],
+    ["........","..#####.","...#....","...#####","#####.##","##...###","..###...","........"],
+    ["........","...###..","........","...#####","######.#","##...##.",".###.##.","........"],
+    ["........","....###.","........","...#####","#######.",".....##.",".###.##.","........"],
+    ["........","........","..####..","...#####","######..","........","####....","........"],
+    ["........","........","..#####.","....####","##..###.","........","########","..####.."],
+    ["........","........","...#####","#.....##","######..","........",".#######",".#####.."],
+    ["........","........","..######","##....##","#####...","........","........","####...."],
+    ["........","........","...#####","###...##","########","........","......##","##......"],
+    ["........","........","....####","####.###","####.##.","........","....####","###....."],
+    ["........","........",".....###","###..###","####.#..","........","...#####","###....."],
+    ["........","........",".....###","#.....##","###.....","........","...#####","##......"],
+    ["........","........",".....###","......##","##......","........","....####","##....##"],
+    ["........","........","....###.","........","........","........",".......#","#.....##"],
+    ["........","........","....##..","........","........","........","........",".....##."],
+    ["........","........","....#...","........","........","........","........",".....#.."]
+  ];
+  var ROWS = CHUNKS.map(function (r) { return r.join(""); });
+  var PINS = [
+    [1, 48, 29], [2, -122, 37], [3, 114, 22], [4, -152, 64],
+    [6, 23, -1], [7, 127, 37], [8, -4, 52], [9, 9, 50],
+    [10, 30, 37], [11, 85, 13], [12, 39, 45], [13, 104, 1],
+    [14, -74, 5], [15, -77, 39]
+  ];
+  var DOTS = [
+    [16, 86, 55], [17, 121, 14], [18, 32, 30], [19, 2, 49], [20, 33, 33],
+    [21, -90, 15], [22, 24, 57], [23, 120, 13], [24, 105, 12], [25, 90, 24],
+    [26, 3, 6], [27, 51, 25], [28, 96, 20], [29, 39, 14], [30, 34, 29],
+    [31, 36, 33], [32, 44, 15], [33, 37, 31], [34, -98, 40], [36, -93, 45],
+    [37, -80, 38], [39, -0.2, 51.5], [40, 10, 46], [41, 77, 28], [42, -3, 51],
+    [43, -1, 52], [44, 122, 14], [45, -74, 41], [46, -77, 41], [47, -74, 39]
+  ];
+  var W = 606, H = 90, svg = document.getElementById("worldmap");
+  var NS = "http://www.w3.org/2000/svg";
+  function X(lon) { return (lon + 180) / 360 * W; }
+  function Y(lat) { return (90 - lat) / 180 * H; }
+  for (var r = 0; r < ROWS.length; r++) {
+    for (var c = 0; c < ROWS[r].length; c++) {
+      if (ROWS[r].charAt(c) !== "#") continue;
+      var dot = document.createElementNS(NS, "ellipse");
+      dot.setAttribute("cx", (c + 0.5) * W / 64);
+      dot.setAttribute("cy", (r + 0.5) * H / 24);
+      dot.setAttribute("rx", 3.1); dot.setAttribute("ry", 3.4);
+      dot.setAttribute("fill", "#7e745c");
+      svg.appendChild(dot);
+    }
+  }
+  DOTS.forEach(function (m) {
+    var d = document.createElementNS(NS, "circle");
+    d.setAttribute("cx", X(m[1])); d.setAttribute("cy", Y(m[2]));
+    d.setAttribute("r", 3); d.setAttribute("fill", "#181410");
+    d.setAttribute("stroke", "#f7f2e7"); d.setAttribute("stroke-width", "1");
+    svg.appendChild(d);
+  });
+  PINS.forEach(function (m) {
+    var g = document.createElementNS(NS, "g");
+    var ring = document.createElementNS(NS, "circle");
+    ring.setAttribute("cx", X(m[1])); ring.setAttribute("cy", Y(m[2]));
+    ring.setAttribute("r", 8.6); ring.setAttribute("fill", "#8c1d18");
+    ring.setAttribute("stroke", "#f7f2e7"); ring.setAttribute("stroke-width", "1.5");
+    var t = document.createElementNS(NS, "text");
+    t.setAttribute("x", X(m[1])); t.setAttribute("y", Y(m[2]) + 3.3);
+    t.setAttribute("text-anchor", "middle");
+    t.setAttribute("font-family", "Noto Sans, sans-serif");
+    t.setAttribute("font-size", "9.5"); t.setAttribute("font-weight", "800");
+    t.setAttribute("fill", "#f7f2e7");
+    t.textContent = m[0];
+    g.appendChild(ring); g.appendChild(t); svg.appendChild(g);
+  });
+})();
+</script>
+
+  <div class="briefs">
+    <div class="cap sans">Also on Wednesday 18 November <span class="r">&mdash; the rest of the day, in brief: stories 16&ndash;47</span></div>
+    <div class="bcols">
+      <div class="brief"><span class="num">16</span><b>Kemerovo &mdash;</b> Russia said 19 people died when a military An-12 crashed in Siberia on Tuesday evening.</div>
+      <div class="brief"><span class="num">17</span><b>Manila &mdash;</b> At Tuesday&rsquo;s Quad summit, Modi promised free e-visas for ASEAN tourists.</div>
+      <div class="brief"><span class="num">18</span><b>Gaza &mdash;</b> UN agencies warned 1.7m are displaced and 1.4m face acute hunger (Tuesday).</div>
+      <div class="brief"><span class="num">19</span><b>Paris &mdash;</b> 146,000 marched across France on Tuesday in a strike over pay (CGT: 500,000+).</div>
+      <div class="brief"><span class="num">20</span><b>London &mdash;</b> Britain sanctioned eight settlement-building firms on Tuesday, plus the Tzav 9 group.</div>
+      <div class="brief"><span class="num">21</span><b>Guatemala City &mdash;</b> A prosecutor investigating electoral offences was shot and wounded on Tuesday.</div>
+      <div class="brief"><span class="num">22</span><b>Riga &mdash;</b> Latvia&rsquo;s parliament approved the Kulbergs government late on Tuesday, 57&ndash;34.</div>
+      <div class="brief"><span class="num">23</span><b>Manila &mdash;</b> ASEAN said on Sunday 80% of the South China Sea code draft is agreed &mdash; but not this year.</div>
+      <div class="brief"><span class="num">24</span><b>Phnom Penh &mdash;</b> Francophone leaders put off their leadership vote by a year on Monday over the Rwanda&ndash;DR Congo rift.</div>
+      <div class="brief"><span class="num">25</span><b>Dhaka &mdash;</b> India beat Pakistan 2&ndash;1 on Tuesday for a record tenth SAFF title.</div>
+      <div class="brief"><span class="num">26</span><b>Lagos &mdash;</b> Nigeria said it broke a cocaine ring across the Sahara; eight couriers, 634 pellets, 13.8 kg.</div>
+      <div class="brief"><span class="num">27</span><b>Doha &mdash;</b> Jordan beat Australia 2&ndash;0 on Monday in a friendly, the Socceroos&rsquo; last game of 2026.</div>
+      <div class="brief"><span class="num">28</span><b>Naypyidaw &mdash;</b> Myanmar&rsquo;s leader said he will review his country&rsquo;s ASEAN ties and called a peace conference for February.</div>
+      <div class="brief"><span class="num">29</span><b>Addis Ababa &mdash;</b> Ethiopia and Eritrea are massing forces along their border, raising fears of war.</div>
+      <div class="brief"><span class="num">30</span><b>Gaza &mdash;</b> Trump&rsquo;s Board of Peace faulted Israel and Hamas for failing to keep the ceasefire plan.</div>
+      <div class="brief"><span class="num">31</span><b>Gaza &mdash;</b> Israel&rsquo;s military said it launched a rare ground operation beyond the Yellow Line; Hamas condemned it.</div>
+      <div class="brief"><span class="num">32</span><b>Sanaa &mdash;</b> UNICEF said 64 children have been killed or injured in Yemen since 3 September.</div>
+      <div class="brief"><span class="num">33</span><b>West Bank &mdash;</b> Settlers shot dead a Palestinian woman, 72, the health ministry said.</div>
+      <div class="brief"><span class="num">34</span><b>Washington &mdash;</b> US measles cases hit 5,412 this year, the most since 1991, a day after losing measles-free status.</div>
+      <div class="brief"><span class="num">35</span><b>Global &mdash;</b> Pew projects Muslims will outnumber Christians by 2035: 2.57bn to 2.52bn.</div>
+      <div class="brief"><span class="num">36</span><b>Minneapolis &mdash;</b> Target posted its best sales growth in five years; comps rose 5.6%.</div>
+      <div class="brief"><span class="num">37</span><b>Washington &mdash;</b> US tech outages reached the NSA; Secretary of State Rubio said America faces no &ldquo;systemic attack&rdquo;.</div>
+      <div class="brief"><span class="num">38</span><b>Global &mdash;</b> GTA VI scored 99 on Metacritic from 140+ reviews, a day before release.</div>
+      <div class="brief"><span class="num">39</span><b>London &mdash;</b> Chelsea Women beat PSG 1&ndash;0 with an 87th-minute header; top of their group.</div>
+      <div class="brief"><span class="num">40</span><b>Bergamo &mdash;</b> Atalanta came from behind to beat Chelsea 2&ndash;1 in the Champions League.</div>
+      <div class="brief"><span class="num">41</span><b>Delhi &mdash;</b> William and Kate met PM Modi as they wrapped up their India tour.</div>
+      <div class="brief"><span class="num">42</span><b>Somerset &mdash;</b> Glastonbury named its 2027 headliners: Harry Styles, Cher, Sam Fender, Billie Eilish.</div>
+      <div class="brief"><span class="num">43</span><b>London &mdash;</b> A US soldier arrested in Britain on suspicion of spying was taken into US military custody.</div>
+      <div class="brief"><span class="num">44</span><b>Manila &mdash;</b> Philippine police asked prosecutors to charge Thomas Markle over child sex abuse material.</div>
+      <div class="brief"><span class="num">45</span><b>New York &mdash;</b> A British hacker who stole $11m in a text-message scheme was jailed for six years in the US.</div>
+      <div class="brief"><span class="num">46</span><b>Washington &mdash;</b> The Senate will hold AI hearings after watchdogs found chatbots drafted terror-attack plans.</div>
+      <div class="brief"><span class="num">47</span><b>Washington &mdash;</b> Democrats nominated Hakeem Jeffries to be the next Speaker &mdash; the first black lawmaker to lead the House.</div>
+    </div>
+  </div>
+
+  <div class="footer"><b>Every story here happened, or was first reported, on Wednesday 18 November 2026</b> &mdash; except items the page itself dates to Tuesday, Monday or Sunday. Full sources in SOURCES.md. All drawings original.</div>
+
+</div>
+</body>
+</html>
